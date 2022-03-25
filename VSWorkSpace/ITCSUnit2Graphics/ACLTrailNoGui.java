@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ACLTrailNoGui 
@@ -6,9 +7,13 @@ public class ACLTrailNoGui
     private static Car car;
     private static Scanner s;
 
+    private static int itemAmount;
+
+    private static ArrayList<Shop> startShop = new ArrayList<>();
+
     public static void startWagon()
     {
-        /* System.out.println("#############################################################\n" +
+        System.out.println("#############################################################\n" +
                            "#                                                           #\n" +
                            "#   Welcome to the ACL Trail!                               #\n" +
                            "#   In this game you will play as someone driving some      #\n" +
@@ -19,7 +24,7 @@ public class ACLTrailNoGui
                            "#############################################################\n"
                            );  
         System.out.print("input a key to continue");
-        s.nextLine(); */
+        s.nextLine();
 
         System.out.println("First off, you'll need some people for your car");
         while(true)
@@ -57,15 +62,8 @@ public class ACLTrailNoGui
             System.out.print("pick a number: ");
 
             int jobNumber = 0;
-            try
-            {
-                jobNumber = s.nextInt();
-            }
-            catch (Exception e)
-            {
-                System.out.println(("HEY DUMMY, THAT'S NOT AN INTEGER!"));
-                continue;
-            }
+            
+            jobNumber = s.nextInt();
 
             if(jobNumber > 5)
             {
@@ -73,15 +71,54 @@ public class ACLTrailNoGui
             }else
             {
                 car.setJob(jobNumber);
+                car.setMoney(car.getJob() * 500);
                 break;
             }
         }
         
         System.out.println(car.getJob());
+        System.out.println(car.getMoney());
+
+        buyWheels(0);
+    }
+
+    public static void buyWheels(int shopNumber)
+    {
+        System.out.println("You have " + car.getMoney() + " Dollars");
+        System.out.print("How many spare wheels will you buy at $" + startShop.get(shopNumber).getWheelPrice());
+        itemAmount = s.nextInt();
+
+        car.setSpareWheels(car.getSpareWheels() + itemAmount);
+        car.setMoney(car.getMoney() - itemAmount * startShop.get(shopNumber).getWheelPrice());
+
+        System.out.println(car.getSpareWheels() + ", " + car.getMoney());
+    }
+    public static void buyTires(int shopNumber)
+    {
+        System.out.println("You have " + car.getMoney() + " Dollars");
+        System.out.print("How many spare wheels will you buy at $" + startShop.get(shopNumber).getWheelPrice());
+        itemAmount = s.nextInt();
+
+        car.setSpareWheels(car.getSpareWheels() + itemAmount);
+        car.setMoney(car.getMoney() - itemAmount * startShop.get(shopNumber).getWheelPrice());
+
+        System.out.println(car.getSpareWheels() + ", " + car.getMoney());
+    }
+    public static void buyFood(int shopNumber)
+    {
+        System.out.println("You have " + car.getMoney() + " Dollars");
+        System.out.print("How many spare wheels will you buy at $" + startShop.get(shopNumber).getWheelPrice());
+        itemAmount = s.nextInt();
+
+        car.setSpareWheels(car.getSpareWheels() + itemAmount);
+        car.setMoney(car.getMoney() - itemAmount * startShop.get(shopNumber).getWheelPrice());
+
+        System.out.println(car.getSpareWheels() + ", " + car.getMoney());
     }
 
     public static void main(String[] args)
     {
+        startShop.add(new Shop());
         car = new Car();
         s = new Scanner(System.in);
 
